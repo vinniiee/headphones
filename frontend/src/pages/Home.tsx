@@ -3,7 +3,7 @@ import products from "../products"
 
 const Home = () => {
     const renderedProducts = products.map(p=>{
-        return <Card image={p.image} name={p.name} brand={p.brand} price={p.price}/>
+        return <Card id={p._id} image={p.image} name={p.name} brand={p.brand} price={p.price}/>
     })
   return (
     <div className="flex flex-row justify-center w-full items-center">

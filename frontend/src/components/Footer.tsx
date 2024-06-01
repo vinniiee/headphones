@@ -7,7 +7,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col>
-            <div className="flex justify-center items-center gap-4">
+            <div className="flex justify-center items-center gap-4 py-2">
               <Logo className="w-48 sm:w-auto"/> <p className="mt-2">&copy; {new Date().getFullYear()}</p>
             </div>
           </Col>
