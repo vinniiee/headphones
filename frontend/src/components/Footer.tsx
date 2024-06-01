@@ -8,7 +8,7 @@ const Footer = () => {
         <Row>
           <Col>
             <div className="flex justify-center items-center gap-4">
-              <Logo/> <p className="mt-2">&copy; {new Date().getFullYear()}</p>
+              <Logo className="w-48 sm:w-auto"/> <p className="mt-2">&copy; {new Date().getFullYear()}</p>
             </div>
           </Col>
         </Row>

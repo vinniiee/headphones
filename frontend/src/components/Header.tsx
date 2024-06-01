@@ -10,7 +10,7 @@ const Header = () => {
       <Navbar variant="dark" expand="md" collapseOnSelect className="shadow-b">
         <Container>
           <Navbar.Brand>
-            <Logo variant="black" />
+            <Logo variant="black" className="w-48 sm:w-auto"/>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="bg-black" />
           <Navbar.Collapse id="basic-navbar-nav">
