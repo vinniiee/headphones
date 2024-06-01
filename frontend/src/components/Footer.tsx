@@ -3,7 +3,7 @@ import Logo from "./assets/Logo";
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className="bg-white w-full">
       <Container>
         <Row>
           <Col>

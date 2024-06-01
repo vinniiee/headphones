@@ -6,7 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 const Header = () => {
   return (
-    <header className="w-full">
+    <header className="w-full bg-white">
       <Navbar variant="dark" expand="md" collapseOnSelect className="shadow-b">
         <Container>
           <LinkContainer to="/">
