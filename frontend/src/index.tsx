@@ -12,6 +12,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Home from "./pages/Home";
+import ProductShow from "./pages/ProductShow";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/" index={true} element={<Home/>} />
+      <Route path="/products/:id" index={true} element={<ProductShow/>} />
     </Route>
   )
 );
