@@ -1,14 +1,18 @@
-import { Link } from "react-router-dom";
-import { Product } from "../types/product";
 import BookmarkIcon from "./assets/BookmarkIcon";
 import Ratings from "./ui/Ratings";
 import CartIcon from "./assets/CartIcon";
 import { Image } from "react-bootstrap";
+import { Product } from "../types/product";
 
 const ProductDescription = ({ p }: { p: Product }) => {
   return (
     <div className="flex flex-col md:flex-row gap-4 max-w-[1000px]">
-      <Image src={p.image} alt="product" fluid className="md:w-1/2 rounded shadow-sm" />
+      <Image
+        src={p.image}
+        alt="product"
+        fluid
+        className="md:w-1/2 rounded shadow-sm"
+      />
       <div className="relative md:w-1/2 justify-between rounded p-2  overflow-hidden flex flex-col bg-white shadow-md ">
         <BookmarkIcon className="absolute right-2 top-2" />
         <div className="flex flex-col  p-2">
@@ -51,8 +55,10 @@ const ProductDescription = ({ p }: { p: Product }) => {
           </p>
           {/* </Link> */}
           <div className="w-full flex flex-col md:flex-row  justify-between gap-2 items-center">
-            <button className="flex justify-center items-center  h-16 text-white bg-black 
-            w-full md:w-1/2 rounded-sm uppercase ">
+            <button
+              className="flex justify-center items-center  h-16 text-white bg-black 
+            w-full md:w-1/2 rounded-sm uppercase "
+            >
               <p className="h-8 -mb-0.5 leading-8">buy now</p>
             </button>
             <button

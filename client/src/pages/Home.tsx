@@ -1,7 +1,19 @@
+import { useEffect, useState } from "react";
 import Card from "../components/ui/Card";
-import products from "../products";
+import { Product } from "../types/product";
+import axios from "axios";
 
 const Home = () => {
+  const [products,setProducts] = useState<Product[]>([]);
+
+  useEffect(()=>{
+    const fetchProducts = async ()=>{
+      const res = await axios.get("/api/products");
+      setProducts(res.data);
+    }
+    fetchProducts(); 
+  },[])
+
   const renderedProducts = products.map((p) => {
     return (
       <Card
