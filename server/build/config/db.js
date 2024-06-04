@@ -45,7 +45,7 @@ var MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) {
     throw new Error("MONGO_URI is not provided");
 }
-console.log("######################################\n", MONGO_URI);
+// console.log("######################################\n",MONGO_URI);
 var dbConnect = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         mongoose_1.default
