@@ -42,19 +42,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 var express_1 = __importDefault(require("express"));
-var products_1 = __importDefault(require("./products"));
 var db_1 = require("./config/db");
+var errorMiddleware_1 = require("./middlewares/errorMiddleware");
+var productRoutes_1 = require("./routes/productRoutes");
 var app = (0, express_1.default)();
-app.get("/api/products", function (req, res) {
-    res.json(products_1.default);
-});
-app.get("/api/products/:id", function (req, res) {
-    var product = products_1.default.find(function (p) { return p._id === req.params.id; });
-    res.json(product);
-});
+app.use("/api/products", productRoutes_1.productRoutes);
 app.get("/", function (req, res) {
     res.send("Server is running...");
 });
+app.use(errorMiddleware_1.notFound);
+app.use(errorMiddleware_1.errorHandler);
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
     var e_1;
     return __generator(this, function (_a) {
