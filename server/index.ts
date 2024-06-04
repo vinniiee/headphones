@@ -1,5 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express, { Request, Response } from "express";
 import products from "./products";
+import { dbConnect } from "./config/db";
 
 const app = express();
 
@@ -16,6 +19,17 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Server is running...");
 });
 
-app.listen(5000, () => {
-  console.log("Listening on port 5000...");
-});
+
+
+const start = async ()=>{
+  try{
+    await dbConnect();
+    app.listen(5000, () => {
+      console.log("Listening on port 5000...");
+    });    
+  }catch(e){
+    console.log(e);
+  }
+}
+
+start();

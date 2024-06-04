@@ -39,41 +39,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-var express_1 = __importDefault(require("express"));
-var products_1 = __importDefault(require("./products"));
-var db_1 = require("./config/db");
-var app = (0, express_1.default)();
-app.get("/api/products", function (req, res) {
-    res.json(products_1.default);
-});
-app.get("/api/products/:id", function (req, res) {
-    var product = products_1.default.find(function (p) { return p._id === req.params.id; });
-    res.json(product);
-});
-app.get("/", function (req, res) {
-    res.send("Server is running...");
-});
-var start = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var e_1;
+exports.dbConnect = void 0;
+var mongoose_1 = __importDefault(require("mongoose"));
+var MONGO_URI = process.env.MONGO_URI;
+if (!MONGO_URI) {
+    throw new Error("MONGO_URI is not provided");
+}
+console.log("######################################\n", MONGO_URI);
+var dbConnect = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, (0, db_1.dbConnect)()];
-            case 1:
-                _a.sent();
-                app.listen(5000, function () {
-                    console.log("Listening on port 5000...");
-                });
-                return [3 /*break*/, 3];
-            case 2:
-                e_1 = _a.sent();
-                console.log(e_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
+        mongoose_1.default
+            .connect(MONGO_URI)
+            .then(function (con) {
+            console.log("MongoDB connection established: ", con.connection.host);
+        })
+            .catch(function (e) {
+            console.log("Server stopped running...\n", e.message);
+            throw new Error(e.message);
+        });
+        return [2 /*return*/];
     });
 }); };
-start();
+exports.dbConnect = dbConnect;
