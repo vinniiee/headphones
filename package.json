@@ -7,7 +7,9 @@
     "start:build": "tsc -w",
     "start:server": "nodemon server/build/index.js",
     "start:client": "npm start --prefix client",
-    "start": "concurrently npm:start:*"
+    "start": "concurrently npm:start:*",
+    "data:populate":"ts-node server/seeder.ts",
+    "data:erase":"ts-node server/seeder.ts -d"
   },
   "repository": {
     "type": "git",
@@ -21,12 +23,15 @@
   },
   "homepage": "https://github.com/vinniiee/headphones#readme",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.4.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "colors": "^1.4.0",
     "concurrently": "^8.2.2",
     "nodemon": "^3.1.2",
     "ts-node": "^10.9.2",
