@@ -1,22 +1,24 @@
-import { useEffect, useState } from "react";
 import Card from "../components/ui/Card";
-import { Product } from "../types/product";
-import axios from "axios";
+import Message from "../components/ui/Message";
+import { useGetProductsQuery } from "../slices/productSlice";
+import { Spinner } from "react-bootstrap";
 
 const Home = () => {
-  const [products,setProducts] = useState<Product[]>([]);
-
-  useEffect(()=>{
-    const fetchProducts = async ()=>{
-      const res = await axios.get("/api/products");
-      setProducts(res.data);
+  let { data: products, isLoading, error } = useGetProductsQuery();
+  let errorMessage;
+  if (error) {
+    if ("status" in error) {
+      // error is FetchBaseQueryError
+      errorMessage = (error.data as { message: string }).message;
+    } else {
+      // error is SerializedError
+      errorMessage = error.message;
     }
-    fetchProducts(); 
-  },[])
-
-  const renderedProducts = products.map((p) => {
+  }
+  const renderedProducts = products?.map((p) => {
     return (
       <Card
+        key={p._id}
         id={p._id}
         image={p.image}
         name={p.name}
@@ -30,7 +32,13 @@ const Home = () => {
   return (
     <div className="flex flex-row justify-center w-full items-center">
       <div className="flex flex-wrap gap-10 justify-center items-center">
-        {renderedProducts}
+        {isLoading ? (
+          <Spinner />
+        ) : error ? (
+          <Message variant="danger">{errorMessage}</Message>
+        ) : (
+          <>{renderedProducts}</>
+        )}
       </div>
     </div>
   );
