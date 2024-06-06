@@ -46,8 +46,9 @@ const Card = (props: CardProps) => {
         </Link>
         {/* </Link> */}
         <div className="w-full flex justify-end items-center">
-          <button className="bg-black p-2 px-3  rounded-sm ">
-            <CartIcon color="white" className="h-4" />
+          <button className="bg-black text-white p-2  text-xs rounded-sm ">
+            {/* <CartIcon color="white" className="h-4" /> */}
+            BUY NOW
           </button>
         </div>
       </div>

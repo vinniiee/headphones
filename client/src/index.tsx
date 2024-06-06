@@ -15,6 +15,7 @@ import Home from "./pages/Home";
 import ProductShow from "./pages/ProductShow";
 import { Provider } from "react-redux";
 import store from "./store";
+import Cart from "./pages/Cart";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/" index={true} element={<Home />} />
+      <Route path="/cart" index={true} element={<Cart />} />
       <Route path="/products/:id" index={true} element={<ProductShow />} />
     </Route>
   )

@@ -4,9 +4,9 @@ import Header from "./components/Header";
 
 function App() {
   return (
-    <div className="flex flex-col justify-between items-center bg-white h-full">
+    <div className="flex flex-col justify-between items-center bg-white h-full ">
       <Header />
-      <main className="p-8 flex flex-col justify-start items-center">
+      <main className="sm:p-8 flex flex-col justify-start items-center w-full">
         <Outlet/>
       </main>
       <Footer />

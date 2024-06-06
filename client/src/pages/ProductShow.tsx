@@ -17,7 +17,7 @@ const ProductShow = () => {
       errorMessage = error.message;
     }
   }
-  console.log(product);
+  // console.log(product);
   return isLoading ? (
     <Spinner />
   ) : error ? (
