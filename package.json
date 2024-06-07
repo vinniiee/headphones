@@ -8,8 +8,8 @@
     "start:server": "nodemon server/build/index.js",
     "start:client": "npm start --prefix client",
     "start": "concurrently npm:start:*",
-    "data:populate":"ts-node server/seeder.ts",
-    "data:erase":"ts-node server/seeder.ts -d"
+    "data:populate": "ts-node server/seeder.ts",
+    "data:erase": "ts-node server/seeder.ts -d"
   },
   "repository": {
     "type": "git",
@@ -24,9 +24,13 @@
   "homepage": "https://github.com/vinniiee/headphones#readme",
   "dependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/jsonwebtoken": "^9.0.6",
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { TokenExpiredError } from "jsonwebtoken";
 
 interface CustomError extends Error {
   kind?: string;
@@ -24,6 +25,13 @@ const errorHandler = (
     message = "Resource not found";
   }
 
+  if(err instanceof TokenExpiredError){
+    statusCode=401;
+    message="JWT token has expired."
+  }
+
+
+  console.log(err);
   res.status(statusCode).json({
     message: message,
     stack: process.env.NODE_ENV === "production" ? null : err.stack,
