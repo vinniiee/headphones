@@ -16,6 +16,8 @@ import ProductShow from "./pages/ProductShow";
 import { Provider } from "react-redux";
 import store from "./store";
 import Cart from "./pages/Cart";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -27,6 +29,8 @@ const router = createBrowserRouter(
       <Route path="/" index={true} element={<Home />} />
       <Route path="/cart" index={true} element={<Cart />} />
       <Route path="/products/:id" index={true} element={<ProductShow />} />
+      <Route path="/login" index={true} element={<Login />} />
+      <Route path="/register" index={true} element={<Register />} />
     </Route>
   )
 );

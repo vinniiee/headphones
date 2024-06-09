@@ -21,7 +21,7 @@ router
 
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
-
+router.post("/register",registerUser);
 router
   .route("/:id")
   .get(requireAuth, requireAdminAccess, getUserById)
@@ -31,7 +31,7 @@ router
   router
   .route("/")
   .get(requireAuth, requireAdminAccess, getUsers)
-  .post(registerUser);
+  
 
 
 export { router as userRoutes };

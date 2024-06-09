@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 dotenv.config();
-import color from "colors";
 import products from "./data/products";
 import users from "./data/users";
 import Product from "./models/productModel";

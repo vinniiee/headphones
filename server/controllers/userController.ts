@@ -1,6 +1,6 @@
 // import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
-import User, { IUser } from "../models/userModel";
+import User from "../models/userModel";
 import jwt from "jsonwebtoken";
 import { generateToken } from "../utils/generateToken";
 import asyncHandler from "../middlewares/asyncHandler";
@@ -14,7 +14,7 @@ const getUsers = async (req: Request, res: Response) => {
 };
 
 // @desc    Get user by ID
-// @route   GET /api/users/:id 
+// @route   GET /api/users/:id
 // @access  Private/Admin
 const getUserById = async (req: Request, res: Response) => {
   const userId = req.params.id;
@@ -25,7 +25,7 @@ const getUserById = async (req: Request, res: Response) => {
     res.status(400);
     throw new Error("Incorrect username or password.");
   }
-}; 
+};
 
 // @desc    Register a new user
 // @route   POST /api/users
@@ -47,15 +47,9 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
 // @access  Public
-const loginUser = async (req: Request, res: Response) => {
+const loginUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-//   let salt = await bcrypt.genSalt(10);
-//   const  newPassword1 = await bcrypt.hash(password, salt);
-//   salt = await bcrypt.genSalt(10);
-//   const  newPassword2 = await bcrypt.hash(password, salt);
-
-//   console.log("entered Password"+newPassword+"\n password: "+user!.password);
   if (user && (await user.matchPassword(password))) {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
       expiresIn: "1d",
@@ -71,7 +65,7 @@ const loginUser = async (req: Request, res: Response) => {
     res.status(400);
     throw new Error("Invalid email or password.");
   }
-};
+});
 
 // @desc    Logout user / clear cookie
 // @route   POST /api/users/logout

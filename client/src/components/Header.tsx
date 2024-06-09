@@ -1,15 +1,33 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import Logo from "./assets/Logo";
 import CartIcon from "./assets/CartIcon";
 import { FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
+import { logout as logoutAction } from "../slices/authSlice";
+import { useLogoutMutation } from "../slices/userApiSlice";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const cartQuantity = useSelector(
     (state: RootState) => state.cart.totalQuantity
   );
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+  const navigate = useNavigate();
+  const [logout] = useLogoutMutation();
+  const logoutHandler = async () => {
+    try {
+      await logout();
+      dispatch(logoutAction());
+      navigate("/login");
+    } catch (err: any) {
+      toast.error(err.data?.message || err.message);
+    }
+  };
+
   return (
     <header className="w-full bg-white">
       <Navbar
@@ -47,14 +65,37 @@ const Header = () => {
                     </div>
                   </Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/user">
-                  <Nav.Link>
-                    <div className="flex justify-center items-center">
-                      <FaUser color="black" size={32} />
-                      <p className="text-black ml-1">Sign In</p>
-                    </div>
-                  </Nav.Link>
-                </LinkContainer>
+                {userInfo ? (
+                  <div className="flex justify-center items-center  text-black/80">
+                    <FaUser color="black" size={32} />
+                    <NavDropdown
+                      title={
+                        <span className="text-black/80 capitalize">
+                          {userInfo.name}
+                        </span>
+                      }
+                      id="username"
+                    >
+                      <LinkContainer to="/profile">
+                        <NavDropdown.Item>Profile</NavDropdown.Item>
+                      </LinkContainer>
+                      <NavDropdown.Item onClick={logoutHandler}>
+                        Logout
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </div>
+                ) : (
+                  <>
+                    <LinkContainer to="/login">
+                      <Nav.Link>
+                        <div className="flex justify-center items-center">
+                          <FaUser color="black" size={32} />
+                          <p className="text-black ml-1">Sign In</p>
+                        </div>
+                      </Nav.Link>
+                    </LinkContainer>
+                  </>
+                )}
               </div>
             </Nav>
           </Navbar.Collapse>
