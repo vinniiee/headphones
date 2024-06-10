@@ -14,6 +14,7 @@ declare global {
 const requireAuth = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies.token;
+    // console.log("TOKEN: ",token);
     if (!token) {
       res.status(401);
       throw new Error("Not authorized.");

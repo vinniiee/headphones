@@ -33,7 +33,7 @@ const errorHandler = (
 
   console.log(err);
   res.status(statusCode).json({
-    message: message,
+    message,
     stack: process.env.NODE_ENV === "production" ? null : err.stack,
   });
 };

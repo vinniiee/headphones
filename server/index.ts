@@ -8,6 +8,7 @@ import { dbConnect } from "./config/db";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware";
 import { productRoutes } from "./routes/productRoutes";
 import { userRoutes } from "./routes/userRoutes";
+import { orderRoutes } from "./routes/orderRoutes";
 
 const app = express();
 app.use(express.json());
@@ -15,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
-
+app.use("/api/orders",orderRoutes)
 app.get("/", (req: Request, res: Response) => {
   res.send("Server is running...");
 });

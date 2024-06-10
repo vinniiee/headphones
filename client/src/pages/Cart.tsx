@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import CartItem from "../components/ui/CartItem";
 import { Link } from "react-router-dom";
+import Button from "../components/ui/Button";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -11,9 +12,10 @@ const Cart = () => {
     itemsList = (
       <div className="flex flex-col justify-center items-center gap-4">
         <p className="mt-16">Your cart is empty.</p>
-        <Link to="/" className="p-2 bg-black text-white rounded-sm text-sm">Explore</Link>
+        <Link to="/" className="p-2 bg-black text-white rounded-sm text-sm">
+          Explore
+        </Link>
       </div>
-      
     );
   } else {
     itemsList = cart.items.map((it) => <CartItem cartItem={it} />);
@@ -34,14 +36,17 @@ const Cart = () => {
         </div>
         <div className="w-full p-4 px-3 md:w-1/3 shadow flex flex-col justify-start items-start gap-4 rounded">
           <h2 className="uppercase w-full text-xl border-b-2">Order details</h2>
-          <div className="w-full flex flex-col justify-start items-start">
+          <div className="w-full flex flex-col justify-start items-end gap-4">
             <div className="w-full flex justify-between items-center">
               <p>Subtotal</p>
               <p className="flex gap-0.5">
                 <img src="rupee-icon.svg" alt="rupee" />
-                {cart.totalAmount}
+                {cart.itemsPrice}
               </p>
             </div>
+            <Link to="/shipping">
+              <Button className="w-full">Checkout</Button>
+            </Link>
           </div>
         </div>
       </div>

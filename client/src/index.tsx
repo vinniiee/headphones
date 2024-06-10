@@ -18,6 +18,12 @@ import store from "./store";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRouted";
+import Shipping from "./pages/Shipping";
+import Payment from "./pages/Payment";
+import PlaceOrder from "./pages/PlaceOrder";
+import Order from "./pages/Order";
+import Profile from "./pages/Profile";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -31,6 +37,13 @@ const router = createBrowserRouter(
       <Route path="/products/:id" index={true} element={<ProductShow />} />
       <Route path="/login" index={true} element={<Login />} />
       <Route path="/register" index={true} element={<Register />} />
+      <Route path="" element={<ProtectedRoute />}>
+        <Route path="/shipping" index element={<Shipping />} />
+        <Route path="/payment" index element={<Payment />} />
+        <Route path="/placeorder" element={<PlaceOrder />} />
+        <Route path="/order/:id" element={<Order />} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
     </Route>
   )
 );

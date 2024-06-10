@@ -3,7 +3,7 @@ import mongoose, { Document, Schema, Model, model } from "mongoose";
 // Interface for Order Item
 interface IOrderItem extends Document {
   name: string;
-  qty: number;
+  quantity: number;
   image: string;
   price: number;
   product: mongoose.Types.ObjectId;
@@ -12,7 +12,7 @@ interface IOrderItem extends Document {
 // Schema for Order Item
 const orderItemSchema = new Schema<IOrderItem>({
   name: { type: String, required: true },
-  qty: { type: Number, required: true },
+  quantity: { type: Number, required: true },
   image: { type: String, required: true },
   price: { type: Number, required: true },
   product: {

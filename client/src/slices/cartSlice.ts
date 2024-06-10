@@ -5,21 +5,40 @@ export interface ICartItem extends Product {
   quantity: number;
 }
 
-export interface CartInitialState {
+export interface CartState {
   items: ICartItem[];
   totalQuantity: number;
-  totalAmount: number;
+  itemsPrice: number;
+  shippingAddress: {
+    address: string | null;
+    city: string | null;
+    postalCode: string | null;
+    country: string | null;
+  };
+  paymentMethod: string | null;
+  totalPrice: number;
+  taxPrice: number;
+  shippingPrice: number;
 }
 
-const defaultState: CartInitialState = {
+const defaultState: CartState = {
   items: [],
-  totalAmount: 0,
+  itemsPrice: 0,
   totalQuantity: 0,
+  shippingAddress: {
+    address: null,
+    city: null,
+    postalCode: null,
+    country: null,
+  },
+  paymentMethod: null,
+  totalPrice: 0,
+  taxPrice: 0,
+  shippingPrice: 0,
 };
-
 const cartFromLocalStorage = localStorage.getItem("cart");
 console.log(cartFromLocalStorage);
-const initialState: CartInitialState = cartFromLocalStorage
+const initialState: CartState = cartFromLocalStorage
   ? JSON.parse(cartFromLocalStorage)
   : defaultState;
 
@@ -35,9 +54,9 @@ const cartSlice = createSlice({
       if (existingIndex !== -1) {
         const existingItem = state.items[existingIndex];
 
-        state.totalAmount = parseFloat(
+        state.itemsPrice = parseFloat(
           (
-            state.totalAmount -
+            state.itemsPrice -
             (existingItem.price * existingItem.quantity -
               cartItem.price * cartItem.quantity)
           ).toFixed(2)
@@ -52,17 +71,54 @@ const cartSlice = createSlice({
         }
       } else {
         state.items.push(cartItem);
-        state.totalAmount = parseFloat(
-          (state.totalAmount + cartItem.price * cartItem.quantity).toFixed(2)
+        state.itemsPrice = parseFloat(
+          (state.itemsPrice + cartItem.price * cartItem.quantity).toFixed(2)
         );
         state.totalQuantity += cartItem.quantity;
       }
+      state.taxPrice = parseFloat((state.itemsPrice * 0.18).toFixed(2));
+      state.shippingPrice = parseFloat(
+        (state.itemsPrice >= 800 ? 0 : 200).toFixed(2)
+      );
+      state.totalPrice =
+        state.taxPrice + state.shippingPrice + state.itemsPrice;
       localStorage.setItem("cart", JSON.stringify(state));
       return state;
+    },
+
+    // orderItems: cart.items,
+    //         shippingAddress: cart.shippingAddress,
+    //         paymentMethod: cart.paymentMethod,
+    //         itemsPrice: cart.itemsPrice,
+    //         shippingPrice: cart.shippingPrice,
+    //         taxPrice: cart.taxPrice,
+    //         totalPrice: cart.totalPrice,
+    clearCartItems: (state) => {
+      state.items = [];
+      state.itemsPrice = 0;
+      state = {
+        ...defaultState,
+        shippingAddress: state.shippingAddress,
+        paymentMethod: state.paymentMethod,
+      };
+      localStorage.setItem("cart", JSON.stringify(state));
+    },
+    savePaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload;
+      localStorage.setItem("cart", JSON.stringify(state));
+    },
+    saveShippingAddress: (state, action) => {
+      state.shippingAddress = action.payload;
+      localStorage.setItem("cart", JSON.stringify(state));
     },
   },
 });
 
-export const { updateCart } = cartSlice.actions;
+export const {
+  updateCart,
+  saveShippingAddress,
+  savePaymentMethod,
+  clearCartItems,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
