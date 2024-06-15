@@ -6,13 +6,13 @@ import { CartState } from "./cartSlice";
 
 const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getOrders: builder.query<Order[], string>({
-      query: (userId: string) => ({
-        url: `${ORDER_URL}/user/${userId}`,
+    getOrders: builder.query<Order[], void>({
+      query: () => ({
+        url: `${ORDER_URL}/my`,
       }),
       transformResponse: (response: any) => {
         if (response.error) {
-          throw new Error(response.error.message);
+          throw new Error(response.error);
         }
         return response as Order[];
       },
@@ -25,7 +25,7 @@ const orderApiSlice = apiSlice.injectEndpoints({
       }),
       transformResponse: (response: any) => {
         if (response.error) {
-          throw new Error(response.error.message);
+          throw new Error(response.error);
         }
         return response as Order;
       },

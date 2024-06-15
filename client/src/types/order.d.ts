@@ -1,7 +1,7 @@
 import { Product } from "./product";
 
 // Interface for Order Item
-export interface OrderItem{
+export interface OrderItem {
   name: string;
   quantity: number;
   image: string;
@@ -11,7 +11,7 @@ export interface OrderItem{
 
 // Interface for Order
 export interface Order {
-  _id:string;
+  _id: string;
   user: { _id: string; name: string; email: string };
   orderItems: IOrderItem[];
   shippingAddress: {
@@ -33,6 +33,7 @@ export interface Order {
   totalPrice: number;
   isPaid: boolean;
   paidAt?: Date;
+  createdAt?: Date;
   isDelivered: boolean;
   deliveredAt?: Date;
 }
