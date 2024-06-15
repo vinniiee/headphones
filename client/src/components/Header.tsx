@@ -11,8 +11,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const cart = useSelector(
-    (state: RootState) => state.cart
+  const totalQuantity = useSelector(
+    (state: RootState) => state.cart.totalQuantity
   );
   const dispatch = useDispatch();
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
@@ -54,12 +54,12 @@ const Header = () => {
                     <div className="relative flex justify-center items-center">
                       <CartIcon className="h-16" />
                       <p className="ml-1 text-black">Cart</p>
-                      {cart.totalQuantity > 0 && (
+                      {totalQuantity > 0 && (
                         <span
                           className="absolute rounded-full bg-black flex justify-center items-center 
                         h-5 w-5 tracking-tighter text-white text-3xs -top-1 left-0"
                         >
-                          {cart.totalQuantity}
+                          {totalQuantity}
                         </span>
                       )}
                     </div>

@@ -9,19 +9,6 @@ interface IOrderItem extends Document {
   product: mongoose.Types.ObjectId;
 }
 
-// Schema for Order Item
-const orderItemSchema = new Schema<IOrderItem>({
-  name: { type: String, required: true },
-  quantity: { type: Number, required: true },
-  image: { type: String, required: true },
-  price: { type: Number, required: true },
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "Product",
-  },
-});
-
 // Interface for Order
 interface IOrder extends Document {
   user: mongoose.Types.ObjectId;
@@ -48,6 +35,23 @@ interface IOrder extends Document {
   isDelivered: boolean;
   deliveredAt?: Date;
 }
+
+
+
+// Schema for Order Item
+const orderItemSchema = new Schema<IOrderItem>({
+  name: { type: String, required: true },
+  quantity: { type: Number, required: true },
+  image: { type: String, required: true },
+  price: { type: Number, required: true },
+  product: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Product",
+  },
+});
+
+
 
 // Schema for Order
 const orderSchema = new Schema<IOrder>(

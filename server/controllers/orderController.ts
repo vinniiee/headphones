@@ -34,16 +34,20 @@ const addOrderItems = asyncHandler(
       shippingPrice,
       totalPrice,
     } = req.body;
-
+    //     name: string;
+    //   quantity: number;
+    //   image: string;
+    //   price: number;
+    //   product: mongoose.Types.ObjectId;
     if (items && items.length === 0) {
       res.status(400);
       throw new Error("No order items");
     } else {
       const order = new Order({
-        items: items.map((x) => ({
+        orderItems: items.map((x) => ({
           ...x,
-          product:x._id,
-          _id:undefined,
+          product: x._id,
+          _id: undefined,
         })),
         user: req.user?._id,
         shippingAddress,
@@ -73,17 +77,17 @@ const getMyOrders = asyncHandler(async (req: Request, res: Response) => {
 // @route   GET /api/orders/:id
 // @access  Private
 const getOrderById = asyncHandler(async (req: Request, res: Response) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(req.params.id).populate('user','name email');
   if (order) {
     const currentUser = req.user;
-    const owner = await User.findById(order?.user._id);
+    const owner = await User.findById(order.user._id);
     if (!owner) {
       res.status(404);
       throw new Error("This order does not belong to any user.");
     }
-    if (!owner.isAdmin && owner !== currentUser) {
+    if (!currentUser?.isAdmin && (owner._id.toString() !== currentUser?._id.toString())) {
       res.status(400);
-      throw new Error("Order does not belong to current user");
+      throw new Error("Order does not belong to current user "+currentUser?._id+" "+owner._id);
     }
     res.json(order);
   } else {
@@ -130,7 +134,7 @@ const updateOrderToDelivered = asyncHandler(
 // @route   GET /api/orders
 // @access  Private/Admin
 const getOrders = asyncHandler(async (req: Request, res: Response) => {
-  const orders = await Order.find();
+  const orders = await Order.find().populate("user", "name email");
   res.json(orders);
 });
 

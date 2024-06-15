@@ -86,30 +86,25 @@ const cartSlice = createSlice({
       return state;
     },
 
-    // orderItems: cart.items,
-    //         shippingAddress: cart.shippingAddress,
-    //         paymentMethod: cart.paymentMethod,
-    //         itemsPrice: cart.itemsPrice,
-    //         shippingPrice: cart.shippingPrice,
-    //         taxPrice: cart.taxPrice,
-    //         totalPrice: cart.totalPrice,
     clearCartItems: (state) => {
-      state.items = [];
-      state.itemsPrice = 0;
-      state = {
+      const newState = {
         ...defaultState,
+        totalQuantity: 0,
         shippingAddress: state.shippingAddress,
         paymentMethod: state.paymentMethod,
       };
-      localStorage.setItem("cart", JSON.stringify(state));
+      localStorage.setItem("cart", JSON.stringify(newState));
+      return newState;
     },
     savePaymentMethod: (state, action) => {
       state.paymentMethod = action.payload;
       localStorage.setItem("cart", JSON.stringify(state));
+      return state;
     },
     saveShippingAddress: (state, action) => {
       state.shippingAddress = action.payload;
       localStorage.setItem("cart", JSON.stringify(state));
+      return state;
     },
   },
 });

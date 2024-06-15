@@ -38,14 +38,7 @@ const PlaceOrderScreen = () => {
   const placeOrderHandler = async () => {
     try {
       const res = await createOrder({
-        items: cart.items,
-        shippingAddress: cart.shippingAddress,
-        paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
-        totalQuantity: cart.totalQuantity,
+        ...cart
       }).unwrap();
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
