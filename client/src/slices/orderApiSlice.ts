@@ -44,7 +44,7 @@ const orderApiSlice = apiSlice.injectEndpoints({
     }),
     payOrder: builder.mutation<
       Order,
-      { orderId: string; details: PayPalOrderDetails}
+      { orderId: string; details: PayPalOrderDetails }
     >({
       query: ({ orderId, details }) => ({
         url: `${ORDER_URL}/${orderId}/pay`,
@@ -58,9 +58,20 @@ const orderApiSlice = apiSlice.injectEndpoints({
         return response as Order;
       },
     }),
-    getPaypalClientId: builder.query<{clientId:string},void>({
-      query: (arg:void) => ({
+    getPaypalClientId: builder.query<{ clientId: string }, void>({
+      query: (arg: void) => ({
         url: `${PAYPAL_URL}`,
+      }),
+      transformResponse: (response: any) => {
+        if (response.error) {
+          throw new Error(response.error);
+        }
+        return response;
+      },
+    }),
+    getAllOrders: builder.query<Order[], void>({
+      query: () => ({
+        url: ORDER_URL,
       }),
       transformResponse: (response: any) => {
         if (response.error) {
@@ -78,6 +89,7 @@ export const {
   useCreateOrderMutation,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
+  useGetAllOrdersQuery
 } = orderApiSlice;
 
 export default orderApiSlice.reducer;

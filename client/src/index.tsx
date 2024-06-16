@@ -18,13 +18,15 @@ import store from "./store";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ProtectedRoute from "./components/ProtectedRouted";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Shipping from "./pages/Shipping";
 import Payment from "./pages/Payment";
 import PlaceOrder from "./pages/PlaceOrder";
 import Order from "./pages/Order";
 import Profile from "./pages/Profile";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import AdminRoute from "./components/AdminRoute";
+import AllOrders from "./pages/AllOrders";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -45,6 +47,9 @@ const router = createBrowserRouter(
         <Route path="/order/:id" element={<Order />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
+      <Route path="" element={<AdminRoute />}>
+        <Route path="/admin/orders/all" element={<AllOrders/>} />
+      </Route>
     </Route>
   )
 );
@@ -52,7 +57,10 @@ const router = createBrowserRouter(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PayPalScriptProvider deferLoading={true} options={{"client-id":"test"}} >
+      <PayPalScriptProvider
+        deferLoading={true}
+        options={{ "client-id": "test" }}
+      >
         <RouterProvider router={router} />
       </PayPalScriptProvider>
     </Provider>

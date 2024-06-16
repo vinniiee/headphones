@@ -9,6 +9,8 @@ import { logout as logoutAction } from "../slices/authSlice";
 import { useLogoutMutation } from "../slices/userApiSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { clearToast } from "../slices/toastSlice";
 
 const Header = () => {
   const totalQuantity = useSelector(
@@ -16,6 +18,14 @@ const Header = () => {
   );
   const dispatch = useDispatch();
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+  const { message, type } = useSelector((state: RootState) => state.toast);
+
+  useEffect(() => {
+    if (message && type) {
+      toast[type](message);
+      dispatch(clearToast());
+    }
+  }, [message, type, dispatch]);
   const navigate = useNavigate();
   const [logout] = useLogoutMutation();
   const logoutHandler = async () => {

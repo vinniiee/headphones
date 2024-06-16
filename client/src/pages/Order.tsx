@@ -34,7 +34,7 @@ import {
   PayPalOrderDetails,
 } from "../types/paypal";
 
-const OrderScreen = () => {
+const Order = () => {
   const { id } = useParams();
   const orderId: string = id || "";
   const navigate = useNavigate();
@@ -281,4 +281,4 @@ const OrderScreen = () => {
   );
 };
 
-export default OrderScreen;
+export default Order;
