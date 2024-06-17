@@ -77,7 +77,10 @@ const getMyOrders = asyncHandler(async (req: Request, res: Response) => {
 // @route   GET /api/orders/:id
 // @access  Private
 const getOrderById = asyncHandler(async (req: Request, res: Response) => {
-  const order = await Order.findById(req.params.id).populate('user','name email');
+  const order = await Order.findById(req.params.id).populate(
+    "user",
+    "name email"
+  );
   if (order) {
     const currentUser = req.user;
     const owner = await User.findById(order.user._id);
@@ -85,9 +88,17 @@ const getOrderById = asyncHandler(async (req: Request, res: Response) => {
       res.status(404);
       throw new Error("This order does not belong to any user.");
     }
-    if (!currentUser?.isAdmin && (owner._id.toString() !== currentUser?._id.toString())) {
+    if (
+      !currentUser?.isAdmin &&
+      owner._id.toString() !== currentUser?._id.toString()
+    ) {
       res.status(400);
-      throw new Error("Order does not belong to current user "+currentUser?._id+" "+owner._id);
+      throw new Error(
+        "Order does not belong to current user " +
+          currentUser?._id +
+          " " +
+          owner._id
+      );
     }
     res.json(order);
   } else {
@@ -126,7 +137,18 @@ const updateOrderToPaid = asyncHandler(async (req: Request, res: Response) => {
 // @access  Private/Admin
 const updateOrderToDelivered = asyncHandler(
   async (req: Request, res: Response) => {
-    res.send("update order to delivered");
+    const order = await Order.findById(req.params.id);
+
+    if (order) {
+      order.isDelivered = true;
+      order.deliveredAt = new Date();
+
+      const updatedOrder = await order.save();
+      res.json(updatedOrder);
+    } else {
+      res.status(404);
+      throw new Error("Order not found");
+    }
   }
 );
 

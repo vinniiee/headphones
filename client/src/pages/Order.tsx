@@ -20,19 +20,18 @@ import {
   SCRIPT_LOADING_STATE,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
   useGetOrderByIdQuery,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
+  useDeliverOrderMutation,
 } from "../slices/orderApiSlice";
 import Message from "../components/ui/Message";
 import { formatApiError } from "../utils/helpers";
-// import { RootState } from "../store";
-import {
-  PayPalOrderDetails,
-} from "../types/paypal";
+import { RootState } from "../store";
+import { PayPalOrderDetails } from "../types/paypal";
 
 const Order = () => {
   const { id } = useParams();
@@ -50,9 +49,17 @@ const Order = () => {
     error,
   } = useGetOrderByIdQuery(orderId!);
 
+  const [deliverOrder, { isLoading: loadingDeliver }] =
+    useDeliverOrderMutation();
+
+  const deliverHandler = async () => {
+    await deliverOrder(orderId);
+    refetch();
+  };
+
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
-  // const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { userInfo } = useSelector((state: RootState) => state.auth);
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -94,7 +101,7 @@ const Order = () => {
       await payOrder({ orderId, details: details! });
       refetch();
       toast.success("Order is paid");
-    } catch (err:any) {
+    } catch (err: any) {
       toast.error(err.message);
     }
   }
@@ -105,7 +112,7 @@ const Order = () => {
       await payOrder({ orderId, details: testDetails });
       refetch();
       toast.success("Order is paid");
-    } catch (err:any) {
+    } catch (err: any) {
       toast.error(err);
     }
   }
@@ -161,7 +168,7 @@ const Order = () => {
               </p>
               {order!.isDelivered ? (
                 <Message variant="success">
-                  Delivered on {order!.deliveredAt?.toString().substring(0,10)}
+                  Delivered on {order!.deliveredAt?.toString().substring(0, 10)}
                 </Message>
               ) : (
                 <Message variant="danger">Not Delivered</Message>
@@ -176,7 +183,7 @@ const Order = () => {
               </p>
               {order!.isPaid ? (
                 <Message variant="success">
-                  Paid on {order!.paidAt?.toString().substring(0,10)}
+                  Paid on {order!.paidAt?.toString().substring(0, 10)}
                 </Message>
               ) : (
                 <Message variant="danger">Not Paid</Message>
@@ -268,11 +275,25 @@ const Order = () => {
                           onError={onError}
                         ></PayPalButtons>
                       </div>
-                    </div>  
+                    </div>
                   )}
                 </ListGroup.Item>
               )}
-              {/* {MARK AS DELIVERED PLACEHOLDER} */}
+              {loadingDeliver && <Spinner />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order?.isPaid &&
+                !order?.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type="button"
+                      className="btn btn-block"
+                      onClick={deliverHandler}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>

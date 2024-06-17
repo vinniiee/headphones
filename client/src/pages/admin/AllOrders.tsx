@@ -1,9 +1,9 @@
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button, Spinner } from "react-bootstrap";
 import { FaTimes } from "react-icons/fa";
-import Message from "../components/ui/Message";
-import { formatApiError } from "../utils/helpers";
-import { useGetAllOrdersQuery } from "../slices/orderApiSlice";
+import Message from "../../components/ui/Message";
+import { useGetAllOrdersQuery } from "../../slices/orderApiSlice";
+import { formatApiError } from "../../utils/helpers";
 
 const AllOrders = () => {
   const { data: orders, isLoading, error } = useGetAllOrdersQuery();

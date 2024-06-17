@@ -80,6 +80,18 @@ const orderApiSlice = apiSlice.injectEndpoints({
         return response;
       },
     }),
+    deliverOrder:builder.mutation<Order,string>({
+      query:(orderId)=>({
+        url:ORDER_URL+"/"+orderId+"/deliver",
+        method:'PUT'
+      }),
+      transformResponse: (response: any) => {
+        if (response.error) {
+          throw new Error(response.error);
+        }
+        return response;
+      },
+    })
   }),
 });
 
@@ -89,7 +101,8 @@ export const {
   useCreateOrderMutation,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
-  useGetAllOrdersQuery
+  useGetAllOrdersQuery,
+  useDeliverOrderMutation
 } = orderApiSlice;
 
 export default orderApiSlice.reducer;

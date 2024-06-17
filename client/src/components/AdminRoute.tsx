@@ -6,7 +6,7 @@ import { setToast } from "../slices/toastSlice";
 const AdminRoute = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  if (userInfo?.isAdmin) {
+  if (userInfo && userInfo.isAdmin) {
     return <Outlet />;
   } else {
     dispatch(

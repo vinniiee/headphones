@@ -60,7 +60,7 @@ const ProfileScreen = () => {
   };
 
   return (
-    <Row>
+    <Row className="w-full">
       <Col md={3}>
         <h2>User Profile</h2>
 
