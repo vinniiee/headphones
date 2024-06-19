@@ -1,3 +1,4 @@
+import path from "path";
 import { Request, Response, Router } from "express";
 import multer from "multer";
 import asyncHandler from "../middlewares/asyncHandler";
@@ -6,7 +7,24 @@ import { requireAdminAccess, requireAuth } from "../middlewares/authMiddleware";
 import Product from "../models/productModel";
 
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+function fileFilter(
+  req: Request,
+  file: Express.Multer.File,
+  cb: CallableFunction
+) {
+  const filetypes = /jpe?g|png|webp/;
+  const mimetypes = /image\/jpe?g|image\/png|image\/webp/;
+
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = mimetypes.test(file.mimetype);
+
+  if (extname && mimetype) {
+    cb(null, true);
+  } else {
+    cb(new Error("Images only!"), false);
+  }
+}
+const upload = multer({ storage, fileFilter });
 
 const router = Router();
 

@@ -21,9 +21,9 @@ const ProductDescription = ({ p }: { p: Product }) => {
         src={p.image}
         alt="product"
         fluid
-        className="md:w-1/2 rounded shadow-sm"
+        className="md:w-1/2 min-w-[300px] rounded shadow-sm"
       />
-      <div className="relative md:w-1/2 justify-between rounded p-2 pb-5 overflow-hidden flex flex-col bg-white shadow-md ">
+      <div className="relative min-w-1/2 md:w-1/2 justify-between rounded p-2 pb-5 overflow-hidden flex flex-col bg-white shadow-md ">
         <BookmarkIcon className="absolute right-2 top-2" />
         <div className="flex flex-col  p-2">
           {/* <Link to={`/products/${id}`}> */}

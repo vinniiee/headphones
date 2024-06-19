@@ -17,12 +17,18 @@ const Card = (props: CardProps) => {
   const { name, brand, price, image, id, rating, reviewsCount } = props;
   return (
     <div className="relative rounded overflow-hidden flex flex-col h-[400px] w-[300px] bg-white shadow-md ">
-      <BookmarkIcon className="absolute right-2 top-2" />
-      <div className="w-[300px] flex justify-center items-start h-[300px]">
-        <img className="w-full  " src={image} alt="product" />
+      <BookmarkIcon className="absolute z-10 right-2 top-2" />
+      <div className="w-[300px] h-[300px] relative">
+        <div className="absolute z-0 inset-0 flex justify-center items-center">
+          <img
+            className="object-cover object-center w-full h-full"
+            src={image}
+            alt="product"
+          />
+        </div>
       </div>
+
       <div className="flex p-2 h-[100px]">
-        {/* <Link to={`/products/${id}`}> */}
         <Link
           to={`/products/${id}`}
           className=" flex flex-col justify-center  w-[225px] text-black items-start "

@@ -4,6 +4,8 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+// import sharp from "sharp";
+
 const bucketName = process.env.BUCKET_NAME!;
 const region = process.env.BUCKET_REGION!;
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID!;
@@ -19,6 +21,12 @@ const s3Client = new S3Client({
 
 export const uploadImageToS3 = async (file: Express.Multer.File) => {
   const imageName = `${new Date().toISOString()}.${file.originalname}`;
+  // const croppedImageBuffer = await sharp(file.buffer)
+  //   .resize(510, 510, {
+  //     fit: sharp.fit.cover,
+  //     position: sharp.strategy.entropy,
+  //   })
+  //   .toBuffer();
   const params = {
     Bucket: bucketName,
     ContentType: file.mimetype,
