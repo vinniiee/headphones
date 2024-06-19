@@ -1,4 +1,5 @@
 import {
+  DeleteObjectCommand,
   GetObjectCommand,
   PutObjectCommand,
   S3Client,
@@ -18,6 +19,15 @@ const s3Client = new S3Client({
     secretAccessKey,
   },
 });
+
+export const deleteImageFromS3 = async (key: string) => {
+  const params = {
+    Bucket: bucketName,
+    Key: key,
+  };
+  const command = new DeleteObjectCommand(params);
+  await s3Client.send(command);
+};
 
 export const uploadImageToS3 = async (file: Express.Multer.File) => {
   const imageName = `${new Date().toISOString()}.${file.originalname}`;

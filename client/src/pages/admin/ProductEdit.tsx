@@ -7,7 +7,7 @@ import {
   useGetProductByIdQuery,
   useUpdateProductMutation,
   useUploadProductImageMutation,
-} from "../../slices/productSlice";
+} from "../../slices/productApiSlice";
 import { formatApiError } from "../../utils/helpers";
 import Message from "../../components/ui/Message";
 

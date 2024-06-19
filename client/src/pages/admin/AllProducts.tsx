@@ -7,7 +7,7 @@ import {
   useCreateProductMutation,
   useDeleteProductMutation,
   useGetProductsQuery,
-} from "../../slices/productSlice";
+} from "../../slices/productApiSlice";
 import { formatApiError } from "../../utils/helpers";
 import Message from "../../components/ui/Message";
 
@@ -21,6 +21,7 @@ const AllProducts = () => {
     if (window.confirm("Are you sure")) {
       try {
         await deleteProduct(id);
+        toast.success("Product deleted successfully.")
         refetch();
       } catch (err) {
         toast.error(formatApiError(err));
@@ -49,7 +50,7 @@ const AllProducts = () => {
           <h1>Products</h1>
         </Col>
         <Col className="text-end">
-          <Button className="my-3" onClick={createProductHandler}>
+          <Button className="my-3 flex justify-center items-center leading-4" onClick={createProductHandler}>
             <FaPlus /> Create Product
           </Button>
         </Col>
@@ -74,9 +75,9 @@ const AllProducts = () => {
                 <th></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {products?.map((product) => (
-                <tr key={product._id}>
+                <tr key={product._id} className="">
                   <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>${product.price}</td>

@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import Product from "../models/productModel";
 import asyncHandler from "../middlewares/asyncHandler";
-import { getSignedImageUrl } from "../aws-config";
+import { deleteImageFromS3, getSignedImageUrl } from "../aws-config";
 
 const getProducts = async (req: Request, res: Response) => {
   const products = await Product.find();
-  for(const p of products){
+  for (const p of products) {
     p.image = await getSignedImageUrl(p.image);
-  }  
-  
+  }
+
   res.json(products);
 };
 
@@ -84,6 +84,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
   if (product) {
+    await deleteImageFromS3(product.image);
     await Product.deleteOne({ _id: product._id });
     res.json({ message: "Product removed" });
   } else {

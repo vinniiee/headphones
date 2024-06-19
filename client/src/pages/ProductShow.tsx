@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import ProductDescription from "../components/ProductDescription";
-import { useGetProductByIdQuery } from "../slices/productSlice";
+import { useGetProductByIdQuery } from "../slices/productApiSlice";
 import { Spinner } from "react-bootstrap";
 import Message from "../components/ui/Message";
 

@@ -1,6 +1,6 @@
 import Card from "../components/ui/Card";
 import Message from "../components/ui/Message";
-import { useGetProductsQuery } from "../slices/productSlice";
+import { useGetProductsQuery } from "../slices/productApiSlice";
 import { Spinner } from "react-bootstrap";
 
 const Home = () => {
