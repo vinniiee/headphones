@@ -29,6 +29,6 @@ export default baseQueryWithErrorHandling;
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithErrorHandling,
-  tagTypes: ["Product", "Order", "User "],
+  tagTypes: ["Product", "Order", "User"],
   endpoints: (builder) => ({}),
 });

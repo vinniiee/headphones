@@ -29,6 +29,8 @@ import AdminRoute from "./components/AdminRoute";
 import AllOrders from "./pages/admin/AllOrders";
 import AllProducts from "./pages/admin/AllProducts";
 import ProductEdit from "./pages/admin/ProductEdit";
+import AllUsers from "./pages/admin/AllUsers";
+import UserEdit from "./pages/admin/UserEdit";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -53,7 +55,8 @@ const router = createBrowserRouter(
         <Route path="/admin/orders/all" element={<AllOrders />} />
         <Route path="/admin/products/all" element={<AllProducts />} />
         <Route path="/admin/products/:id/edit" element={<ProductEdit />} />
-        <Route path="/admin/users/all" element={<AllOrders />} />
+        <Route path="/admin/users/all" element={<AllUsers />} />
+        <Route path="/admin/users/:id/edit" element={<UserEdit />} />
       </Route>
     </Route>
   )
