@@ -1,4 +1,4 @@
-import { PRODUCT_URL } from "../constants";
+import { PRODUCT_URL, UPLOAD_IMAGE_URL } from "../constants";
 import { Product } from "../types/product";
 import { apiSlice } from "./apiSlice";
 
@@ -40,7 +40,20 @@ export const productSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: changes,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "Product", id }],
+      invalidatesTags: (result, error, { id }) => [
+        { type: "Product", id },
+        { type: "Product", id: "LIST" },
+      ],
+    }),
+    uploadProductImage: builder.mutation<
+      { message: string; imagePath: string },
+      { formData: FormData; productId: string }
+    >({
+      query: ({ formData, productId }) => ({
+        url: UPLOAD_IMAGE_URL + "/" + productId,
+        body: formData,
+        method: "POST",
+      }),
     }),
   }),
 });
@@ -51,4 +64,5 @@ export const {
   useDeleteProductMutation,
   useCreateProductMutation,
   useUpdateProductMutation,
+  useUploadProductImageMutation,
 } = productSlice;

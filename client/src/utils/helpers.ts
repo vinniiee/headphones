@@ -24,7 +24,8 @@ export function isErrorWithMessage(
 }
 
 export function formatApiError(err:any){
-    if (isFetchBaseQueryError(err)) {
+    try{
+      if (isFetchBaseQueryError(err)) {
         // you can access all properties of `FetchBaseQueryError` here
         const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
         return JSON.parse(errMsg).message;
@@ -32,4 +33,7 @@ export function formatApiError(err:any){
         // you can access a string 'message' property here
         return JSON.parse(err.message).message;
       }
+    }catch(e){
+      return "Internal Server Error";
+    }
 }

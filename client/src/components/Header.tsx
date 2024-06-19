@@ -115,7 +115,7 @@ const Header = () => {
                     }
                     id="adminmenu"
                   >
-                    <LinkContainer to="/admin/products/my">
+                    <LinkContainer to="/admin/products/all">
                       <NavDropdown.Item>Products</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to="/admin/orders/all">

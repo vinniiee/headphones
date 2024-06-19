@@ -1,13 +1,18 @@
 import { NextFunction, Request, Response } from "express";
 import Product from "../models/productModel";
 import asyncHandler from "../middlewares/asyncHandler";
+import { getSignedImageUrl } from "../aws-config";
 
- const getProducts = async (req: Request, res: Response) => {
+const getProducts = async (req: Request, res: Response) => {
   const products = await Product.find();
+  for(const p of products){
+    p.image = await getSignedImageUrl(p.image);
+  }  
+  
   res.json(products);
 };
 
- const getProductById = async (
+const getProductById = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -15,6 +20,12 @@ import asyncHandler from "../middlewares/asyncHandler";
   let product;
   try {
     product = await Product.findById(req.params.id);
+    if (!product) {
+      res.status(404);
+      throw new Error("No product found.");
+    }
+    const signedImageUrl = await getSignedImageUrl(product.image);
+    product.image = signedImageUrl;
     res.json(product);
   } catch (err) {
     next(err);
@@ -24,7 +35,7 @@ import asyncHandler from "../middlewares/asyncHandler";
 // @desc    Create a product
 // @route   POST /api/products
 // @access  Private/Admin
- const createProduct = asyncHandler(async (req, res) => {
+const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
     name: "Sample name",
     price: 0,
@@ -44,9 +55,8 @@ import asyncHandler from "../middlewares/asyncHandler";
 // @desc    Update a product
 // @route   PUT /api/products/:id
 // @access  Private/Admin
- const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
-    req.body;
+const updateProduct = asyncHandler(async (req, res) => {
+  const { name, price, description, brand, category, countInStock } = req.body;
 
   const product = await Product.findById(req.params.id);
 
@@ -54,7 +64,7 @@ import asyncHandler from "../middlewares/asyncHandler";
     product.name = name;
     product.price = price;
     product.description = description;
-    product.image = image;
+    // product.image = image;
     product.brand = brand;
     product.category = category;
     product.countInStock = countInStock;
@@ -70,7 +80,7 @@ import asyncHandler from "../middlewares/asyncHandler";
 // @desc    Delete a product
 // @route   DELETE /api/products/:id
 // @access  Private/Admin
- const deleteProduct = asyncHandler(async (req, res) => {
+const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
   if (product) {
@@ -82,11 +92,10 @@ import asyncHandler from "../middlewares/asyncHandler";
   }
 });
 
-
 export {
   deleteProduct,
   updateProduct,
   getProductById,
   getProducts,
-  createProduct
-}
+  createProduct,
+};
