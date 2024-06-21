@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { clearToast } from "../slices/toastSlice";
+import SearchBar from "./SearchBar";
 
 const Header = () => {
   const totalQuantity = useSelector(
@@ -42,11 +43,11 @@ const Header = () => {
     <header className="w-full bg-white">
       <Navbar
         variant="dark"
-        expand="md"
+        expand="lg"
         collapseOnSelect
         className="shadow-b flex justify-between w-full"
       >
-        <Container>
+        <Container className="flex items-center justify-between gap-8">
           <LinkContainer to="/">
             <Navbar.Brand>
               <Logo variant="black" className="w-48 sm:w-auto" />
@@ -56,8 +57,9 @@ const Header = () => {
             aria-controls="basic-navbar-nav"
             className="bg-black"
           />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
+          <Navbar.Collapse id="basic-navbar-nav" className="flex flex-col lg:flex-row items-center justify-center py-8">
+            <SearchBar/>
+            <Nav className="flex w-full items-center justify-end">
               <div className="flex flex-col my-6 md:flex-row md:my-0 justify-around items-center gap-4">
                 <LinkContainer to="/cart">
                   <Nav.Link>

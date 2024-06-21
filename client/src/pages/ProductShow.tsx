@@ -3,6 +3,7 @@ import ProductDescription from "../components/ProductDescription";
 import { useGetProductByIdQuery } from "../slices/productApiSlice";
 import { Spinner } from "react-bootstrap";
 import Message from "../components/ui/Message";
+import Reviews from "../components/Reviews";
 
 const ProductShow = () => {
   const { id } = useParams();
@@ -23,7 +24,10 @@ const ProductShow = () => {
   ) : error ? (
     <Message variant="danger">{errorMessage}</Message>
   ) : product ? (
-    <ProductDescription p={product} />
+    <>
+      <ProductDescription p={product} />
+      <Reviews reviews={product.reviews} />
+    </>
   ) : (
     <p>Product not found.</p>
   );

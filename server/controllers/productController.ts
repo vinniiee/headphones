@@ -1,15 +1,31 @@
 import { NextFunction, Request, Response } from "express";
-import Product from "../models/productModel";
+import Product, { IReview, Review } from "../models/productModel";
 import asyncHandler from "../middlewares/asyncHandler";
 import { deleteImageFromS3, getSignedImageUrl } from "../aws-config";
+import { Types } from "mongoose";
 
 const getProducts = async (req: Request, res: Response) => {
-  const products = await Product.find();
+  // const pageSize = process.env.PAGINATION_LIMIT!;
+  const pageSize = 4;
+  const page = Number(req.query.pageNumber) || 1;
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+  const count = await Product.countDocuments({ ...keyword });
+
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
   for (const p of products) {
     p.image = await getSignedImageUrl(p.image);
   }
 
-  res.json(products);
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 };
 
 const getProductById = async (
@@ -93,10 +109,71 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Create new review
+// @route   POST /api/products/:id/reviews
+// @access  Private
+const createProductReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    const alreadyReviewed = product.reviews.find(
+      (r) => r.user.toString() === req.user?._id.toString()
+    );
+
+    if (alreadyReviewed) {
+      res.status(400);
+      throw new Error("Product already reviewed");
+    }
+
+    const { name, _id } = req.user!;
+
+    if (!name || !_id) {
+      res.status(400);
+      throw new Error("Current User is invalid.");
+    }
+    const review: Partial<IReview> = {
+      name,
+      rating: Number(rating),
+      comment,
+      user: new Types.ObjectId(_id.toString()),
+    };
+
+    const newReview = new Review(review);
+    product.reviews.push(newReview);
+
+    product.numReviews = product.reviews.length;
+
+    product.rating =
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      product.reviews.length;
+
+    await product.save();
+    res.status(201).json({ message: "Review added" });
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+
+// @desc    Get top rated products
+// @route   GET /api/products/top
+// @access  Public
+const getFeaturedProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  for (const p of products) {
+    p.image = await getSignedImageUrl(p.image);
+  }
+  res.json(products);
+});
+
 export {
   deleteProduct,
   updateProduct,
   getProductById,
   getProducts,
   createProduct,
+  createProductReview,
+  getFeaturedProducts,
 };

@@ -10,10 +10,15 @@ import {
 } from "../../slices/productApiSlice";
 import { formatApiError } from "../../utils/helpers";
 import Message from "../../components/ui/Message";
+import { useParams } from "react-router-dom";
 
 const AllProducts = () => {
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+  const { pageNumber, keyword } = useParams();
 
+  const { data, isLoading, error } = useGetProductsQuery({
+    keyword: keyword || "",
+    pageNumber: pageNumber || "1",
+  });
   const [deleteProduct, { isLoading: loadingDelete }] =
     useDeleteProductMutation();
 
@@ -21,8 +26,7 @@ const AllProducts = () => {
     if (window.confirm("Are you sure")) {
       try {
         await deleteProduct(id);
-        toast.success("Product deleted successfully.")
-        refetch();
+        toast.success("Product deleted successfully.");
       } catch (err) {
         toast.error(formatApiError(err));
       }
@@ -36,7 +40,6 @@ const AllProducts = () => {
     if (window.confirm("Are you sure you want to create a new product?")) {
       try {
         await createProduct().unwrap();
-        refetch();
       } catch (err) {
         toast.error(formatApiError(err));
       }
@@ -50,7 +53,10 @@ const AllProducts = () => {
           <h1>Products</h1>
         </Col>
         <Col className="text-end">
-          <Button className="my-3 flex justify-center items-center leading-4" onClick={createProductHandler}>
+          <Button
+            className="my-3 flex justify-center items-center leading-4"
+            onClick={createProductHandler}
+          >
             <FaPlus /> Create Product
           </Button>
         </Col>
@@ -75,8 +81,8 @@ const AllProducts = () => {
                 <th></th>
               </tr>
             </thead>
-            <tbody >
-              {products?.map((product) => (
+            <tbody>
+              {data?.products?.map((product) => (
                 <tr key={product._id} className="">
                   <td>{product._id}</td>
                   <td>{product.name}</td>

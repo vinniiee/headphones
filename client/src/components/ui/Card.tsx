@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import BookmarkIcon from "../assets/BookmarkIcon";
-import CartIcon from "../assets/CartIcon";
 import Ratings from "./Ratings";
 
 interface CardProps {
@@ -46,17 +45,16 @@ const Card = (props: CardProps) => {
             </p>
           </div>
           <div className="flex gap-1 mt-.5">
-            <img src="rupee-icon.svg" alt="rupee" />
+            <img src="/rupee-icon.svg" alt="rupee" />
             <p>{price * 100}</p>
           </div>
         </Link>
         {/* </Link> */}
-        <div className="w-full flex justify-end items-center">
+        {/* <div className="w-full flex justify-end items-center">
           <button className="bg-black text-white p-2  text-xs rounded-sm ">
-            {/* <CartIcon color="white" className="h-4" /> */}
             BUY NOW
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
