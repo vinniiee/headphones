@@ -7,6 +7,7 @@ import SelectQuantity from "./SelectQuantity";
 import { useDispatch, useSelector } from "react-redux";
 import { ICartItem, updateCart } from "../slices/cartSlice";
 import { RootState } from "../store";
+import Meta from "./Meta";
 
 const ProductDescription = ({ p }: { p: Product }) => {
   const cartItem: ICartItem | undefined = useSelector((state: RootState) =>
@@ -17,6 +18,7 @@ const ProductDescription = ({ p }: { p: Product }) => {
 
   return (
     <div className="flex flex-col md:flex-row gap-4 max-w-[1000px]">
+      <Meta title={p.name}  />
       <Image
         src={p.image}
         alt="product"
