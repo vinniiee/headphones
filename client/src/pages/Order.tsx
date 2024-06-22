@@ -31,6 +31,7 @@ import {
 import Message from "../components/ui/Message";
 import { formatApiError } from "../utils/helpers";
 import { RootState } from "../store";
+import Currency from "../components/ui/Currency";
 // import { PayPalOrderDetails } from "../types/paypal";
 
 const Order = () => {
@@ -212,8 +213,12 @@ const Order = () => {
                             {item.name}
                           </Link>
                         </Col>
-                        <Col md={4}>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                        <Col
+                          md={4}
+                          className="flex items-center gap-2 text-black/70"
+                        >
+                          {item.quantity} x <Currency amount={item.price} /> ={" "}
+                          <Currency amount={item.quantity * item.price} />
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -232,25 +237,33 @@ const Order = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${order!.itemsPrice}</Col>
+                  <Col>
+                    <Currency amount={order!.itemsPrice} />
+                  </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>${order!.shippingPrice}</Col>
+                  <Col>
+                    <Currency amount={order!.shippingPrice} />
+                  </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>${order!.taxPrice}</Col>
+                  <Col>
+                    <Currency amount={order!.taxPrice} />
+                  </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>${order!.totalPrice}</Col>
+                  <Col>
+                    <Currency amount={order!.totalPrice} />
+                  </Col>
                 </Row>
               </ListGroup.Item>
               {!order!.isPaid && (

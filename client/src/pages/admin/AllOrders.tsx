@@ -4,6 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import Message from "../../components/ui/Message";
 import { useGetAllOrdersQuery } from "../../slices/orderApiSlice";
 import { formatApiError } from "../../utils/helpers";
+import Currency from "../../components/ui/Currency";
 
 const AllOrders = () => {
   const { data: orders, isLoading, error } = useGetAllOrdersQuery();
@@ -34,7 +35,7 @@ const AllOrders = () => {
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
                 <td>{order.createdAt?.toString().substring(0, 10)}</td>
-                <td>${order.totalPrice}</td>
+                <td><Currency amount={order.totalPrice}/></td>
                 <td>
                   {order.isPaid ? (
                     order.paidAt?.toString().substring(0, 10)

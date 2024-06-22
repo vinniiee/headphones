@@ -12,6 +12,7 @@ import { RootState } from "../store";
 import { useNavigate } from "react-router-dom";
 import { formatApiError } from "../utils/helpers";
 import Message from "../components/ui/Message";
+import Currency from "../components/ui/Currency";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -133,7 +134,11 @@ const ProfileScreen = () => {
                 <tr key={order._id}>
                   <td>{order._id}</td>
                   <td>{order.createdAt?.toString().substring(0, 10)}</td>
-                  <td>{order.totalPrice}</td>
+                  <td>
+                    <div className="flex justify-center items-center">
+                      <Currency amount={order.totalPrice} />
+                    </div>
+                  </td>
                   <td>
                     {order.isPaid ? (
                       order.paidAt?.toString().substring(0, 10)

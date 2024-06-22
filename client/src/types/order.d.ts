@@ -13,7 +13,7 @@ export interface OrderItem {
 export interface Order {
   _id: string;
   user: { _id: string; name: string; email: string };
-  orderItems: IOrderItem[];
+  orderItems: OrderItem[];
   shippingAddress: {
     address: string;
     city: string;
