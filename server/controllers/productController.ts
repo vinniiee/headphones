@@ -5,8 +5,13 @@ import { deleteImageFromS3, getSignedImageUrl } from "../aws-config";
 import { Types } from "mongoose";
 
 const getProducts = async (req: Request, res: Response) => {
-  // const pageSize = process.env.PAGINATION_LIMIT!;
-  const pageSize = 4;
+  let pageSize;
+  if (process.env.NODE_ENV === "production") {
+    pageSize = parseFloat(process.env.PAGINATION_LIMIT!);
+  } else {
+    pageSize = 4;
+  }
+
   const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
