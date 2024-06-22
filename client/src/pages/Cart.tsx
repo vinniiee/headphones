@@ -45,7 +45,9 @@ const Cart = () => {
               </p>
             </div>
             <Link to="/shipping">
-              <Button className="w-full">Checkout</Button>
+              <Button className="w-full" disabled={cart.items.length === 0}>
+                Checkout
+              </Button>
             </Link>
           </div>
         </div>
