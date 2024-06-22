@@ -39,7 +39,7 @@ app.use(errorHandler);
 
 const server = async () => {
   try {
-    await dbConnect();
+    
     if (!process.env.JWT_SECRET) {
       throw new Error("JWT_SECRET is not configured.");
     }
@@ -54,6 +54,7 @@ const server = async () => {
     ) {
       throw new Error("AWS client is not configured properly.");
     }
+    await dbConnect();
     app.listen(5000, () => {
       console.log("Listening on port 5000...");
     });

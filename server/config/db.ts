@@ -7,13 +7,14 @@ if (!MONGO_URI) {
 // console.log("######################################\n",MONGO_URI);
 
 export const dbConnect = async () => {
-  mongoose
+  console.log("Connecting to database...")
+  await mongoose
     .connect(MONGO_URI)
     .then((con) => {
       console.log("MongoDB connection established: ", con.connection.host);
     })
     .catch((e) => {
-      console.log("Server stopped running...\n",e.message);
+      console.log("Server stopped running!\n",e.message);
       throw new Error(e.message);
     });
 };
