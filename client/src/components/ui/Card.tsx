@@ -46,7 +46,7 @@ const Card = (props: CardProps) => {
           </div>
           <div className="flex gap-1 mt-.5">
             <img src="/rupee-icon.svg" alt="rupee" />
-            <p>{price * 100}</p>
+            <p>{price}</p>
           </div>
         </Link>
         {/* </Link> */}
