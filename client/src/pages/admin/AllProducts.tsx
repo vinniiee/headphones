@@ -11,6 +11,7 @@ import {
 import { formatApiError } from "../../utils/helpers";
 import Message from "../../components/ui/Message";
 import { useParams } from "react-router-dom";
+import Paginate from "../../components/Paginate";
 
 const AllProducts = () => {
   const { pageNumber, keyword } = useParams();
@@ -107,7 +108,7 @@ const AllProducts = () => {
               ))}
             </tbody>
           </Table>
-          {/* PAGINATE PLACEHOLDER */}
+          <Paginate pages={data?.pages} page={data?.page} keyword={keyword} />
         </>
       )}
     </>

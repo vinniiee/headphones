@@ -9,7 +9,11 @@
     "start:client": "npm start --prefix client",
     "start": "concurrently npm:start:*",
     "data:populate": "ts-node server/seeder.ts",
-    "data:erase": "ts-node server/seeder.ts -d"
+    "data:erase": "ts-node server/seeder.ts -d",
+    "build:server": "tsc",
+    "build:client": "npm run build --prefix client",
+    "build": "npm run build:server && npm run build:client",
+    "start:prod": "node server/build/index.js"
   },
   "repository": {
     "type": "git",

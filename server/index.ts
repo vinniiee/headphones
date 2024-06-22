@@ -1,3 +1,4 @@
+import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 import cookieParser from "cookie-parser";
@@ -8,7 +9,7 @@ import { productRoutes } from "./routes/productRoutes";
 import { userRoutes } from "./routes/userRoutes";
 import { orderRoutes } from "./routes/orderRoutes";
 import { imageUploadRoute } from "./routes/uploadRoute";
-import s3Client from "./aws-config";
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -20,9 +21,20 @@ app.use("/api/config/paypal", (req: Request, res: Response) => {
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
 });
 app.use("/api/image/upload", imageUploadRoute);
-app.get("/", (req: Request, res: Response) => {
-  res.send("Server is running...");
-});
+
+if (process.env.NODE_ENV === "production") {
+  const __dirname = path.resolve();
+  app.use(express.static(path.join(__dirname, "/client/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running....");
+  });
+}
+
 
 app.use(notFound);
 app.use(errorHandler);

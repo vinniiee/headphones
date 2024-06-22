@@ -10,7 +10,6 @@ import "./styles/bootstrap.custom.css";
 import "./styles/index.css";
 import "./index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import Home from "./pages/Home";
 import ProductShow from "./pages/ProductShow";
 import { Provider } from "react-redux";
@@ -43,6 +42,7 @@ const router = createBrowserRouter(
       <Route path="/" index={true} element={<Home />} />
       <Route path="/page/:pageNumber" index={true} element={<Home />} />
       <Route path="/search/:keyword" element={<Home />} />
+      <Route path="/search/:keyword/page/:pageNumber" element={<Home />} />
       <Route path="/cart" index={true} element={<Cart />} />
       <Route path="/products/:id" index={true} element={<ProductShow />} />
       <Route path="/login" index={true} element={<Login />} />
@@ -56,6 +56,10 @@ const router = createBrowserRouter(
       </Route>
       <Route path="" element={<AdminRoute />}>
         <Route path="/admin/orders/all" element={<AllOrders />} />
+        <Route
+          path="/admin/orders/all/page/:pageNumber"
+          element={<AllOrders />}
+        />
         <Route path="/admin/products/all" element={<AllProducts />} />
         <Route
           path="/admin/products/all/page/:pageNumber"
@@ -63,6 +67,10 @@ const router = createBrowserRouter(
         />
         <Route path="/admin/products/:id/edit" element={<ProductEdit />} />
         <Route path="/admin/users/all" element={<AllUsers />} />
+        <Route
+          path="/admin/users/all/page/:pageNumber"
+          element={<AllUsers />}
+        />
         <Route path="/admin/users/:id/edit" element={<UserEdit />} />
       </Route>
     </Route>
@@ -83,8 +91,3 @@ root.render(
     </HelmetProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
