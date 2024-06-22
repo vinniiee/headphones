@@ -16,10 +16,10 @@ const Paginate = ({
   const location = useLocation();
   const currentUrl = location.pathname.split('/page')[0];
   const paginatedUrl = currentUrl.endsWith('/')?currentUrl+"page/":currentUrl+"/page/"
-  console.log(currentUrl)
-  console.log(paginatedUrl);
+  // console.log(currentUrl)
+  // console.log(paginatedUrl);
   return pages > 1 ? (
-    <Pagination>
+    <Pagination className="my-8">
       {Array.from({ length: pages }, (_, x) => (
         <LinkContainer
           key={x + 1}
