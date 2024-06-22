@@ -4,13 +4,12 @@
   "description": "",
   "main": "server/index.ts",
   "scripts": {
-    "start:build": "tsc -w",
-    "start:server": "nodemon server/build/index.js",
-    "start:client": "npm start --prefix client",
-    "start": "concurrently npm:start:*",
+    "start:dev:build": "tsc -w",
+    "start:dev:server": "nodemon server/build/index.js",
+    "start:dev:client": "npm start --prefix client",
+    "start": "concurrently npm:start:dev:*",
     "data:populate": "ts-node server/seeder.ts",
     "data:erase": "ts-node server/seeder.ts -d",
-    
     "build:server": "tsc",
     "build:client": "npm run build --prefix client",
     "build": "npm run build:server && npm run build:client",

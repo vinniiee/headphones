@@ -31,7 +31,7 @@ import {
 import Message from "../components/ui/Message";
 import { formatApiError } from "../utils/helpers";
 import { RootState } from "../store";
-import { PayPalOrderDetails } from "../types/paypal";
+// import { PayPalOrderDetails } from "../types/paypal";
 
 const Order = () => {
   const { id } = useParams();
@@ -106,16 +106,16 @@ const Order = () => {
     }
   }
 
-  async function onApproveTest() {
-    const testDetails: PayPalOrderDetails = { payer: {} };
-    try {
-      await payOrder({ orderId, details: testDetails });
-      refetch();
-      toast.success("Order is paid");
-    } catch (err: any) {
-      toast.error(err);
-    }
-  }
+  // async function onApproveTest() {
+  //   const testDetails: PayPalOrderDetails = { payer: {} };
+  //   try {
+  //     await payOrder({ orderId, details: testDetails });
+  //     refetch();
+  //     toast.success("Order is paid");
+  //   } catch (err: any) {
+  //     toast.error(err);
+  //   }
+  // }
   // if (error) {
   //   error = formatApiError(error);
   // }
@@ -261,12 +261,12 @@ const Order = () => {
                     <Spinner />
                   ) : (
                     <div>
-                      <Button
+                      {/* <Button
                         style={{ marginBottom: "10px" }}
                         onClick={onApproveTest}
                       >
                         Test Pay Order
-                      </Button>
+                      </Button> */}
 
                       <div>
                         <PayPalButtons
