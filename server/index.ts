@@ -22,6 +22,8 @@ app.use("/api/config/paypal", (req: Request, res: Response) => {
 });
 app.use("/api/image/upload", imageUploadRoute);
 
+
+
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, "/client/build")));
@@ -34,8 +36,6 @@ if (process.env.NODE_ENV === "production") {
     res.send("API is running....");
   });
 }
-
-
 app.use(notFound);
 app.use(errorHandler);
 
