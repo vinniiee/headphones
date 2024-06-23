@@ -16,7 +16,7 @@ const ProductCarousel = ({className}:{className?:string}) => {
     >
       {products?.map((product) => (
         <Carousel.Item key={product._id} className="h-[300px]">
-          <Link to={`/product/${product._id}`}>
+          <Link to={`/products/${product._id}`}>
             <div className="flex justify-between w-full">
               <Image
                 src={product.image}
