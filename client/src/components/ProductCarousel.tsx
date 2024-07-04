@@ -3,8 +3,8 @@ import { Carousel, Image } from "react-bootstrap";
 import { useGetFeaturedProductsQuery } from "../slices/productApiSlice";
 import { formatApiError } from "../utils/helpers";
 import Message from "./ui/Message";
-import RupeeIcon from "./assets/RupeeIcon";
-const ProductCarousel = ({className}:{className?:string}) => {
+import Currency from "./ui/Currency";
+const ProductCarousel = ({ className }: { className?: string }) => {
   const { data: products, isLoading, error } = useGetFeaturedProductsQuery();
 
   return isLoading ? null : error ? (
@@ -28,8 +28,7 @@ const ProductCarousel = ({className}:{className?:string}) => {
                 <h2 className="text-white text-right  leading-5 flex flex-col gap-2 absolute top-8">
                   {product.name}{" "}
                   <div className="flex justify-end items-center gap-1 text-xl">
-                    <RupeeIcon color="white" className=""/>
-                    {product.price}
+                    <Currency color="white" size={12} amount={product.price}  className="gap-1"/>
                   </div>
                 </h2>
               </Carousel.Caption>

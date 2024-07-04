@@ -1,13 +1,12 @@
 import { AssetProps } from "./asset-types";
 
-const RupeeIcon = ({ color, variant, className }: AssetProps) => {
+const RupeeIcon = ({ color, variant, className,size }: AssetProps) => {
   if (!color) {
     color = variant || "black";
   }
   return (
     <svg
-      width="7"
-      height="10"
+      height={size || "10"}
       viewBox="0 0 7 10"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
