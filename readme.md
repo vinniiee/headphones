@@ -2,7 +2,7 @@
 
 Headphones is an eCommerce website built using the MERN stack (MongoDB, Express, React, Node.js).
 
-Deployed on - [Render](https://headphones-nzgi.onrender.com/)
+Deployed on - [Render](https://headphones-wg30.onrender.com/)
 
 ## Table of Contents
 
