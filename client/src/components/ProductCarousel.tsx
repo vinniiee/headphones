@@ -24,8 +24,12 @@ const ProductCarousel = ({ className }: { className?: string }) => {
                 fluid
                 className="h-[300px]"
               />
-              <Carousel.Caption className=" relative  flex justify-end items-center  h-[300px] px-4  bg-gradient-to-r from-gray-600 to-black/20">
-                <h2 className="text-white text-right  leading-5 flex flex-col gap-2 absolute top-8">
+              <Carousel.Caption className=" relative  flex justify-end items-center  
+              h-[300px] px-4  bg-gradient-to-r 
+              from-gray-600 to-black/20">
+                <h2 className="text-white sm:bg-transparent bg-black/40 sm:text-lg min-w-[300px] md:text-xl rounded p-4 py-2
+                text-right  leading-5 ml-8
+                flex flex-col gap-2 absolute top-8">
                   {product.name}{" "}
                   <div className="flex justify-end items-center gap-1 text-xl">
                     <Currency color="white" size={12} amount={product.price}  className="gap-1"/>
